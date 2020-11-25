@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/letters_clients/static/css/main.b7a9c9a8.chunk.css",
-    "main.js": "/letters_clients/static/js/main.95815730.chunk.js",
-    "main.js.map": "/letters_clients/static/js/main.95815730.chunk.js.map",
-    "runtime-main.js": "/letters_clients/static/js/runtime-main.3b8c7372.js",
-    "runtime-main.js.map": "/letters_clients/static/js/runtime-main.3b8c7372.js.map",
-    "static/js/2.b4f0da02.chunk.js": "/letters_clients/static/js/2.b4f0da02.chunk.js",
-    "static/js/2.b4f0da02.chunk.js.map": "/letters_clients/static/js/2.b4f0da02.chunk.js.map",
-    "static/js/3.7fc624b9.chunk.js": "/letters_clients/static/js/3.7fc624b9.chunk.js",
-    "static/js/3.7fc624b9.chunk.js.map": "/letters_clients/static/js/3.7fc624b9.chunk.js.map",
+    "main.css": "/letters_clients/static/css/main.c3891990.chunk.css",
+    "main.js": "/letters_clients/static/js/main.8361d898.chunk.js",
+    "main.js.map": "/letters_clients/static/js/main.8361d898.chunk.js.map",
+    "runtime-main.js": "/letters_clients/static/js/runtime-main.3916f368.js",
+    "runtime-main.js.map": "/letters_clients/static/js/runtime-main.3916f368.js.map",
+    "static/js/2.49ea046d.chunk.js": "/letters_clients/static/js/2.49ea046d.chunk.js",
+    "static/js/2.49ea046d.chunk.js.map": "/letters_clients/static/js/2.49ea046d.chunk.js.map",
+    "static/js/3.990aa503.chunk.js": "/letters_clients/static/js/3.990aa503.chunk.js",
+    "static/js/3.990aa503.chunk.js.map": "/letters_clients/static/js/3.990aa503.chunk.js.map",
     "index.html": "/letters_clients/index.html",
-    "static/css/main.b7a9c9a8.chunk.css.map": "/letters_clients/static/css/main.b7a9c9a8.chunk.css.map",
-    "static/js/2.b4f0da02.chunk.js.LICENSE.txt": "/letters_clients/static/js/2.b4f0da02.chunk.js.LICENSE.txt",
+    "static/css/main.c3891990.chunk.css.map": "/letters_clients/static/css/main.c3891990.chunk.css.map",
+    "static/js/2.49ea046d.chunk.js.LICENSE.txt": "/letters_clients/static/js/2.49ea046d.chunk.js.LICENSE.txt",
     "static/media/index.css": "/letters_clients/static/media/Gaegu-Light.cf4b9a22.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.3b8c7372.js",
-    "static/js/2.b4f0da02.chunk.js",
-    "static/css/main.b7a9c9a8.chunk.css",
-    "static/js/main.95815730.chunk.js"
+    "static/js/runtime-main.3916f368.js",
+    "static/js/2.49ea046d.chunk.js",
+    "static/css/main.c3891990.chunk.css",
+    "static/js/main.8361d898.chunk.js"
   ]
 }
