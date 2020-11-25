@@ -16,6 +16,13 @@
   border-radius: 5px;
   padding: 10px;
 }
+.letters-content-wapper {
+  text-align: right;
+}
+.letters-content-delete {
+  cursor: pointer;
+  padding: 3px;
+}
 
 .wrap {
   display: flex;

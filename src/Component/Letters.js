@@ -2,6 +2,8 @@ import React from "react";
 import useAxios from "axios-hooks";
 import "./Letters.css";
 import { IoMdRefresh } from "react-icons/io";
+import { AiOutlineDelete } from "react-icons/ai";
+import removeLetter from "./RemoveLetter";
 
 const Letters = () => {
   const [{ data, loading, error, respones }, refetch] = useAxios({
@@ -31,6 +33,11 @@ const Letters = () => {
       {data.map((letter) => (
         <div className="letters-content" key={letter._id}>
           {letter.msg}
+          <div className="letters-content-wapper">
+            <span className="letters-content-delete">
+              <AiOutlineDelete onClick={() => removeLetter(letter._id)} />
+            </span>
+          </div>
         </div>
       ))}
     </div>
