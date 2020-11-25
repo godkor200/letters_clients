@@ -3,18 +3,13 @@ import useAxios from "axios-hooks";
 import "./Letters.css";
 import { IoMdRefresh } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
+import removeLetter from "./RemoveLetter";
 
 const Letters = () => {
   const [{ data, loading, error, respones }, refetch] = useAxios({
     method: "GET",
     url: "https://letters-heroku.herokuapp.com/api/letters",
   });
-
-  const removeLetter = (_id) => {
-    if (window.confirm("진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?")) {
-      return;
-    }
-  };
 
   return loading || error ? (
     <div className="letters-wrapper">
