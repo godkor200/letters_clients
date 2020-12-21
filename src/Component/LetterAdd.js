@@ -10,7 +10,7 @@ const LetterAdd = () => {
     //변환할 값(setTextArea) = setState
   };
 
-  const url = "https://letters-heroku.herokuapp.com/api/letters";
+  const url = "http://localhost:4001/api/letters";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,8 +41,8 @@ const LetterAdd = () => {
         onChange={handleChange}
         //ref={inputRef}
       />
-      <div class="wrap">
-        <button class="button">Submit</button>
+      <div className="wrap">
+        <button className="button">Submit</button>
       </div>
     </form>
   );

@@ -22,8 +22,13 @@
 .letters-content-delete {
   cursor: pointer;
   padding: 3px;
+  size: 40px;
 }
-
+.letters-content-modify {
+  cursor: pointer;
+  padding: 3px;
+  size: 40px;
+}
 .wrap {
   display: flex;
   align-items: center;
