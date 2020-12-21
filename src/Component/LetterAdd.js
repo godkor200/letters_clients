@@ -41,8 +41,8 @@ const LetterAdd = () => {
         onChange={handleChange}
         //ref={inputRef}
       />
-      <div class="wrap">
-        <button class="button">Submit</button>
+      <div className="wrap">
+        <button className="button">Submit</button>
       </div>
     </form>
   );
