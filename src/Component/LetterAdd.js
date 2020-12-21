@@ -10,7 +10,7 @@ const LetterAdd = () => {
     //변환할 값(setTextArea) = setState
   };
 
-  const url = "http://localhost:4001/api/letters";
+  const url = "https://letters-heroku.herokuapp.com/api/letters";
 
   const handleSubmit = (e) => {
     e.preventDefault();

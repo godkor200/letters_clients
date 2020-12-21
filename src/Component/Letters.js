@@ -11,7 +11,9 @@ const Letters = () => {
   const [toggle, setToggle] = useState(false);
   const _effectMethod = {
     async _getLetter() {
-      return await axios.get("http://localhost:4001/api/letters");
+      return await axios.get(
+        "https://letters-heroku.herokuapp.com/api/letters"
+      );
     },
   };
   // 화면 시작하자마자 데이터 랜더링하고 시작하기 위해 useEffect 사용
@@ -23,7 +25,7 @@ const Letters = () => {
 
   const removeLetter = async (e) => {
     console.log("🚀 ~ file: Letters.js ~ line 32 ~ removeLetter ~ e", e);
-    const url = `http://localhost:4001/api/letters/${e.target.id}`;
+    const url = `https://letters-heroku.herokuapp.com/api/letters${e.target.id}`;
     if (window.confirm("진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?")) {
       await axios
         .delete(url)
