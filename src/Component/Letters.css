@@ -19,12 +19,20 @@
 .letters-content-wapper {
   text-align: right;
 }
+.letters-reply-wapper {
+  text-align: left;
+}
 .letters-content-delete {
   cursor: pointer;
   padding: 3px;
   size: 40px;
 }
 .letters-content-modify {
+  cursor: pointer;
+  padding: 3px;
+  size: 40px;
+}
+.letters-content-reply {
   cursor: pointer;
   padding: 3px;
   size: 40px;
