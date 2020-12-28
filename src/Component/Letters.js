@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Letters.css";
+import Render from "./Render";
 import { IoMdRefresh } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
@@ -8,7 +9,6 @@ import { MdModeEdit } from "react-icons/md";
 const Letters = () => {
   const [data, setData] = useState(null);
   const [refresh, setRefresh] = useState(false);
-  const [toggle, setToggle] = useState(false);
   const _effectMethod = {
     async _getLetter() {
       return await axios.get(
@@ -25,7 +25,7 @@ const Letters = () => {
 
   const removeLetter = async (e) => {
     console.log("🚀 ~ file: Letters.js ~ line 32 ~ removeLetter ~ e", e);
-    const url = `https://letters-heroku.herokuapp.com/api/letters${e.target.id}`;
+    const url = `https://letters-heroku.herokuapp.com/api/letters/${e.target.id}`;
     if (window.confirm("진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?")) {
       await axios
         .delete(url)
@@ -44,10 +44,7 @@ const Letters = () => {
   const reRending = () => {
     setRefresh(!refresh);
   };
-  //수정토글
-  const revisedToggle = () => {
-    setToggle(!toggle);
-  };
+
   return !data ? (
     <div className="letters-wrapper">
       <div className="letters-content">
@@ -61,36 +58,15 @@ const Letters = () => {
       </div>
     </div>
   ) : (
-    <div className="letters-wrapper">
-      <div className="wrap">
-        <button className="button" onClick={reRending}>
-          <IoMdRefresh />
-        </button>
-      </div>
-      {data.map((letter) => (
-        <div className="letters-content" key={letter._id}>
-          {letter.msg}
-          <div className="letters-content-wapper">
-            <span className="letters-content-delete">
-              <AiOutlineDelete
-                id={letter._id}
-                onClick={(e) => removeLetter(e)}
-              />
-            </span>
-
-            <span className="letters-content-modify" onClick={revisedToggle}>
-              <MdModeEdit />
-            </span>
-            {toggle && (
-              <form>
-                <input></input>
-                <button id={letter._id}>수정</button>
-              </form>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
+    data.map((letter) => (
+      <Render
+        letter={letter}
+        reRending={reRending}
+        AiOutlineDelete={AiOutlineDelete}
+        MdModeEdit={MdModeEdit}
+        removeLetter={removeLetter}
+      />
+    ))
   );
 };
 

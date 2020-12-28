@@ -18,11 +18,13 @@ const LetterAdd = () => {
       alert("쓸 말이 그렇게 없니 도대체?");
       return;
     } else {
-      axios.post(url, { msg: textarea }).then((data) => {
-        console.log(data);
-        alert("제출되었습니닷");
-        window.location.reload();
-      });
+      axios
+        .post(url, { msg: textarea, createdAt: new Date().toLocaleString() })
+        .then((data) => {
+          console.log(data);
+          alert("제출되었습니닷");
+          window.location.reload();
+        });
     }
 
     setTextArea("");
@@ -42,7 +44,7 @@ const LetterAdd = () => {
         //ref={inputRef}
       />
       <div className="wrap">
-        <button className="button">Submit</button>
+        <button className="button">제출</button>
       </div>
     </form>
   );
