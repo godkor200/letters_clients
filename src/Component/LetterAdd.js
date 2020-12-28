@@ -44,7 +44,7 @@ const LetterAdd = () => {
         //ref={inputRef}
       />
       <div className="wrap">
-        <button className="button">Submit</button>
+        <button className="button">제출</button>
       </div>
     </form>
   );

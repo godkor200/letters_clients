@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Letters.css";
 import { FaReplyd } from "react-icons/fa";
+import { MdSubdirectoryArrowRight } from "react-icons/md";
 
 const Render = (props) => {
   const [toggle, setToggle] = useState(false);
@@ -28,7 +29,7 @@ const Render = (props) => {
   };
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    if (!reply) {
+    if (!reply || /^\s*$/.test(reply)) {
       alert("쓸 말이 그렇게 없니 도대체?");
       return;
     } else {
@@ -45,6 +46,22 @@ const Render = (props) => {
           alert("제출되었습니닷");
           reRending();
         });
+    }
+  };
+  const removeReply = (e) => {
+    e.preventDefault();
+    console.log("🚀 ~ file: Render.js ~ line 60 ~ removeReply ~ e", e);
+    if (window.confirm("진짜 댓글 지울꺼야?")) {
+      axios
+        .delete(
+          `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`
+        )
+        .then(() => {
+          alert("삭제되었습니닷");
+          reRending();
+        });
+    } else {
+      return;
     }
   };
 
@@ -67,9 +84,17 @@ const Render = (props) => {
             {replytoggle &&
               letter.cmt.map((t) => {
                 return (
-                  <div className="letters-reply-wapper">
-                    <span>{Object.keys(t)}</span>:{" "}
-                    <span>{Object.values(t)}</span>
+                  <div>
+                    <div className="letters-reply-wapper" key={t._id}>
+                      <div className="replyTime">{t.createdAt}</div>
+                      <span className="replyComment">
+                        <MdSubdirectoryArrowRight />
+                        {t.cmt}
+                      </span>
+                      <div className="letters-reply-delete" postId={letter._id}>
+                        <AiOutlineDelete id={t._id} onClick={removeReply} />
+                      </div>
+                    </div>
                   </div>
                 );
               })}
@@ -77,14 +102,22 @@ const Render = (props) => {
               <MdModeEdit />
             </span>
             {toggle && (
-              <form onSubmit={handleReplySubmit} id={letter._id}>
+              <form
+                className="letters-reply-form"
+                onSubmit={handleReplySubmit}
+                id={letter._id}
+              >
                 <input
                   onChange={handleReplyChange}
                   type="Text"
-                  placeholder="어떤 댓글을 쓰고 싶니?"
+                  name="name"
+                  autoComplete="off"
                   value={reply}
-                ></input>
-                <button>댓글 달기</button>
+                  placeholder="어떤 댓글을 달꺼니?"
+                  required
+                />
+
+                <button className="button">제출</button>
               </form>
             )}
           </div>
