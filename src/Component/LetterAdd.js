@@ -19,7 +19,11 @@ const LetterAdd = () => {
       return;
     } else {
       axios
-        .post(url, { msg: textarea, createdAt: new Date().toLocaleString() })
+        .post(url, {
+          name: localStorage.getItem("name"),
+          msg: textarea,
+          createdAt: new Date().toLocaleString(),
+        })
         .then((data) => {
           console.log(data);
           alert("제출되었습니닷");
@@ -33,7 +37,7 @@ const LetterAdd = () => {
   };
   return (
     <form className="letter-form" onSubmit={handleSubmit}>
-      <h2>수빈이 한태 편지쓰기</h2>
+      <h2>편지쓰기</h2>
       <textarea
         className="letter-textarea"
         type="Text"
