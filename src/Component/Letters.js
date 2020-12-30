@@ -24,7 +24,6 @@ const Letters = () => {
   }, [refresh]);
 
   const removeLetter = async (e) => {
-    console.log("🚀 ~ file: Letters.js ~ line 32 ~ removeLetter ~ e", e);
     const url = `https://letters-heroku.herokuapp.com/api/letters/${e.target.id}`;
     if (window.confirm("진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?")) {
       await axios
