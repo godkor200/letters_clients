@@ -3,7 +3,7 @@ import Letters from "./Letters";
 import LetterAdd from "./LetterAdd";
 import "../App.css";
 import { Helmet } from "react-helmet";
-const Index = () => {
+const LetterEntry = () => {
   return (
     <div className="body-warpper">
       <Helmet>
@@ -15,4 +15,4 @@ const Index = () => {
     </div>
   );
 };
-export default Index;
+export default LetterEntry;
