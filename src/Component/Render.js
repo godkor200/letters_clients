@@ -15,7 +15,6 @@ const Render = (props) => {
     MdModeEdit,
     letter,
   } = props;
-  const url = "https://letters-heroku.herokuapp.com/api/letters";
   //수정토글
   const revisedToggle = () => {
     setToggle(!toggle);
@@ -28,46 +27,48 @@ const Render = (props) => {
     setReply(e.target.value);
   };
   const handleReplySubmit = (e) => {
+    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
     e.preventDefault();
     if (!reply || /^\s*$/.test(reply)) {
       alert("쓸 말이 그렇게 없니 도대체?");
       return;
     } else {
-      axios
-        .post(
-          `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`,
-          {
-            cmt: reply,
-            createdAt: new Date().toLocaleString(),
-          }
-        )
-        .then((data) => {
-          console.log(data);
-          alert("제출되었습니닷");
-          reRending();
-        });
+      axios.post(
+        `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`,
+        {
+          name: localStorage.getItem("name"),
+          cmt: reply,
+          createdAt: new Date().toLocaleString(),
+        }
+      );
+      alert("제출되었습니닷");
+      setReply("");
+      reRending();
     }
   };
   const removeReply = (e) => {
+    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
     e.preventDefault();
-    console.log("🚀 ~ file: Render.js ~ line 60 ~ removeReply ~ e", e);
+    let postId = e.target.id.split(",")[0];
+    let cmtId = e.target.id.split(",")[1];
     if (window.confirm("진짜 댓글 지울꺼야?")) {
-      axios
-        .delete(
-          `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`
-        )
-        .then(() => {
-          alert("삭제되었습니닷");
-          reRending();
-        });
+      axios.delete(
+        `https://letters-heroku.herokuapp.com/api/comments/${postId}/${cmtId}`
+      );
+      alert("삭제되었습니닷");
+      reRending();
     } else {
       return;
     }
   };
-
   return (
     <div className="letters-wrapper">
       {letter.createdAt.toLocaleString()}
+      <div className="letter-author">
+        {letter.name === "병국"
+          ? `${letter.name}이가 수빈이에게`
+          : `${letter.name}이가 병국이에게`}
+      </div>
       {
         <div className="letters-content" key={letter._id}>
           {letter.msg}
@@ -79,7 +80,7 @@ const Render = (props) => {
               />
             </span>
             <span className="letters-content-reply" onClick={replyToggle}>
-              <FaReplyd id={letter._id} />
+              <FaReplyd id={letter._id} />({letter.cmt.length})
             </span>
             {replytoggle &&
               letter.cmt.map((t) => {
@@ -89,10 +90,14 @@ const Render = (props) => {
                       <div className="replyTime">{t.createdAt}</div>
                       <span className="replyComment">
                         <MdSubdirectoryArrowRight />
-                        {t.cmt}
+                        {t.name}
                       </span>
-                      <div className="letters-reply-delete" postId={letter._id}>
-                        <AiOutlineDelete id={t._id} onClick={removeReply} />
+                      <div>{t.cmt}</div>
+                      <div className="letters-reply-delete">
+                        <AiOutlineDelete
+                          id={[letter._id, t._id]}
+                          onClick={removeReply}
+                        />
                       </div>
                     </div>
                   </div>
