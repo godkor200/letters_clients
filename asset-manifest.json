@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/letters_clients/static/css/main.e46a81b2.chunk.css",
-    "main.js": "/letters_clients/static/js/main.c0212eb2.chunk.js",
-    "main.js.map": "/letters_clients/static/js/main.c0212eb2.chunk.js.map",
+    "main.css": "/letters_clients/static/css/main.4061e7ce.chunk.css",
+    "main.js": "/letters_clients/static/js/main.5e4f9ab1.chunk.js",
+    "main.js.map": "/letters_clients/static/js/main.5e4f9ab1.chunk.js.map",
     "runtime-main.js": "/letters_clients/static/js/runtime-main.0e976883.js",
     "runtime-main.js.map": "/letters_clients/static/js/runtime-main.0e976883.js.map",
     "static/js/2.61f7b5c6.chunk.js": "/letters_clients/static/js/2.61f7b5c6.chunk.js",
     "static/js/2.61f7b5c6.chunk.js.map": "/letters_clients/static/js/2.61f7b5c6.chunk.js.map",
     "index.html": "/letters_clients/index.html",
-    "static/css/main.e46a81b2.chunk.css.map": "/letters_clients/static/css/main.e46a81b2.chunk.css.map",
+    "static/css/main.4061e7ce.chunk.css.map": "/letters_clients/static/css/main.4061e7ce.chunk.css.map",
     "static/js/2.61f7b5c6.chunk.js.LICENSE.txt": "/letters_clients/static/js/2.61f7b5c6.chunk.js.LICENSE.txt",
     "static/media/index.css": "/letters_clients/static/media/Gaegu-Light.cf4b9a22.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.0e976883.js",
     "static/js/2.61f7b5c6.chunk.js",
-    "static/css/main.e46a81b2.chunk.css",
-    "static/js/main.c0212eb2.chunk.js"
+    "static/css/main.4061e7ce.chunk.css",
+    "static/js/main.5e4f9ab1.chunk.js"
   ]
 }
