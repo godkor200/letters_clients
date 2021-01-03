@@ -5,7 +5,8 @@ import Render from "./Render";
 import { IoMdRefresh } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
-
+import LetterAdd from "./LetterAdd";
+import { Helmet } from "react-helmet";
 const Letters = () => {
   const [data, setData] = useState(null);
   const [refresh, setRefresh] = useState(false);
@@ -46,6 +47,11 @@ const Letters = () => {
 
   return !data ? (
     <div className="letters-wrapper">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>편지쓰기</title>
+      </Helmet>
+      <LetterAdd />
       <div className="letters-content">
         편지를 데이터베이스에서 불러오고 있는데 오류가 있으면 안뜰꺼야 새로고침
         해보렴..{" "}
@@ -57,15 +63,25 @@ const Letters = () => {
       </div>
     </div>
   ) : (
-    data.map((letter) => (
-      <Render
-        letter={letter}
-        reRending={reRending}
-        AiOutlineDelete={AiOutlineDelete}
-        MdModeEdit={MdModeEdit}
-        removeLetter={removeLetter}
-      />
-    ))
+    <div className="letters-wrapper">
+      <div className="versiontag">v1.0</div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>편지쓰기</title>
+      </Helmet>
+      <LetterAdd reRending={reRending} />
+      {data
+        .sort((one, two) => (one.createdAt > two.createdAt ? -1 : 1))
+        .map((letter) => (
+          <Render
+            letter={letter}
+            reRending={reRending}
+            AiOutlineDelete={AiOutlineDelete}
+            MdModeEdit={MdModeEdit}
+            removeLetter={removeLetter}
+          />
+        ))}
+    </div>
   );
 };
 
