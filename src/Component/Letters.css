@@ -84,7 +84,8 @@ h2 {
   text-align: center;
 }
 
-.reply-button {
+.versiontag {
+  font-size: 10px;
 }
 
 .letters-reply-form input {
