@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./LetterAdd.css";
 
-const LetterAdd = () => {
+const LetterAdd = (props) => {
+  const { reRending } = props;
   const [textarea, setTextArea] = useState("");
 
   const handleChange = (e) => {
@@ -27,7 +28,7 @@ const LetterAdd = () => {
         .then((data) => {
           console.log(data);
           alert("제출되었습니닷");
-          window.location.reload();
+          reRending();
         });
     }
 
@@ -45,7 +46,6 @@ const LetterAdd = () => {
         value={textarea}
         name="text"
         onChange={handleChange}
-        //ref={inputRef}
       />
       <div className="wrap">
         <button className="button">제출</button>

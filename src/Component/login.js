@@ -25,6 +25,9 @@ const Login = () => {
       alert("너 병국이구나?");
       localStorage.setItem("name", "병국");
       history.push("/letter");
+    } else {
+      alert("너 누구얏!");
+      return;
     }
     setPassword("");
   };
