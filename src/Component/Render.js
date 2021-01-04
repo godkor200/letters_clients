@@ -71,7 +71,7 @@ const Render = (props) => {
       </div>
       {
         <div className="letters-content" key={letter._id}>
-          {letter.msg}
+          <div dangerouslySetInnerHTML={{ __html: letter.msg }}></div>
           <div className="letters-content-wapper">
             <span className="letters-content-delete">
               <AiOutlineDelete

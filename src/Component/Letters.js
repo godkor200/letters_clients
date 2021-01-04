@@ -64,7 +64,7 @@ const Letters = () => {
     </div>
   ) : (
     <div className="letters-wrapper">
-      <div className="versiontag">v1.0</div>
+      <div className="versiontag">v1.1 : Implemented TextEditer</div>
       <Helmet>
         <meta charSet="utf-8" />
         <title>편지쓰기</title>
