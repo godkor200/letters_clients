@@ -32,7 +32,7 @@ export const StyleButton = styled.button`
   width: 4rem;
   height: 2.75rem;
   border-radius: 4px;
-  font-size: 1.2rem;
+  font-size: 15px;
   font-weight: 500;
   font-family: "맑은 고딕";
   color: black;
