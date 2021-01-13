@@ -41,6 +41,7 @@ const Letters = () => {
     reRending();
   };
   //리렌더
+
   const reRending = () => {
     setRefresh(!refresh);
   };
@@ -64,15 +65,14 @@ const Letters = () => {
     </div>
   ) : (
     <div className="letters-wrapper">
-      <div className="versiontag">v1.0</div>
+      <div className="versiontag">v1.1 : Implemented TextEditer</div>
       <Helmet>
         <meta charSet="utf-8" />
         <title>편지쓰기</title>
       </Helmet>
       <LetterAdd reRending={reRending} />
-      {data
-        .sort((one, two) => (one.createdAt > two.createdAt ? -1 : 1))
-        .map((letter) => (
+      {data.map((letter) => {
+        return (
           <Render
             letter={letter}
             reRending={reRending}
@@ -80,7 +80,8 @@ const Letters = () => {
             MdModeEdit={MdModeEdit}
             removeLetter={removeLetter}
           />
-        ))}
+        );
+      })}
     </div>
   );
 };
