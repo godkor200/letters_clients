@@ -1,6 +1,5 @@
 import React from "react";
 import Letters from "./Letters";
-import LetterAdd from "./LetterAdd";
 import "../App.css";
 const LetterEntry = () => {
   return (

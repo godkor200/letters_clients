@@ -3,9 +3,13 @@ import axios from "axios";
 import "./Letters.css";
 import { FaReplyd } from "react-icons/fa";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
+import { BiCommentEdit } from "react-icons/bi";
+import LettersModify from "./lettersModify";
 
 const Render = (props) => {
-  const [toggle, setToggle] = useState(false);
+  //댓글 쓰기 훅
+  const [cmtToggle, setCmtToggle] = useState(false);
+  const [revisedMsgToggle, setRevisedMsgToggle] = useState(false);
   const [replytoggle, setReplyToggle] = useState(false);
   const [reply, setReply] = useState("");
   const {
@@ -15,9 +19,13 @@ const Render = (props) => {
     MdModeEdit,
     letter,
   } = props;
-  //수정토글
+  //편지 수정함수
   const revisedToggle = () => {
-    setToggle(!toggle);
+    setRevisedMsgToggle(!revisedMsgToggle);
+  };
+  ////댓글 쓰기 토글 함수
+  const cmtFucToggle = () => {
+    setCmtToggle(!cmtToggle);
   };
   //댓글토글
   const replyToggle = () => {
@@ -71,7 +79,11 @@ const Render = (props) => {
       </div>
       {
         <div className="letters-content" key={letter._id}>
-          <div dangerouslySetInnerHTML={{ __html: letter.msg }}></div>
+          {!revisedMsgToggle ? (
+            <div dangerouslySetInnerHTML={{ __html: letter.msg }} />
+          ) : (
+            <LettersModify letter={letter} />
+          )}
           <div className="letters-content-wapper">
             <span className="letters-content-delete">
               <AiOutlineDelete
@@ -103,10 +115,13 @@ const Render = (props) => {
                   </div>
                 );
               })}
-            <span className="letters-content-modify" onClick={revisedToggle}>
+            <span className="letters-content-modify" onClick={cmtFucToggle}>
+              <BiCommentEdit />
+            </span>
+            <span onClick={revisedToggle}>
               <MdModeEdit />
             </span>
-            {toggle && (
+            {cmtToggle && (
               <form
                 className="letters-reply-form"
                 onSubmit={handleReplySubmit}
@@ -121,12 +136,10 @@ const Render = (props) => {
                   placeholder="어떤 댓글을 달꺼니?"
                   required
                 />
-
                 <button className="button">제출</button>
               </form>
             )}
           </div>
-          <div></div>
         </div>
       }
     </div>
