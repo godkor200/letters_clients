@@ -1,25 +1,30 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./Letters.css";
-import { FaReplyd } from "react-icons/fa";
-import { MdSubdirectoryArrowRight } from "react-icons/md";
-import { BiCommentEdit } from "react-icons/bi";
-import LettersModify from "./lettersModify";
+
+import React, { useState } from 'react';
+import axios from 'axios';
+import './Letters.css';
+import { FaReplyd } from 'react-icons/fa';
+import { MdSubdirectoryArrowRight } from 'react-icons/md';
+import { BiHighlight } from 'react-icons/bi';
+
 
 const Render = (props) => {
   //댓글 쓰기 훅
   const [cmtToggle, setCmtToggle] = useState(false);
   const [revisedMsgToggle, setRevisedMsgToggle] = useState(false);
   const [replytoggle, setReplyToggle] = useState(false);
-  const [reply, setReply] = useState("");
+  const [updateToggle, setUpdateToggle] = useState(false);
+  const [reply, setReply] = useState('');
   const {
     reRending,
     removeLetter,
     AiOutlineDelete,
-    MdModeEdit,
+    BiCommentEdit,
     letter,
+    LetterUpdate,
   } = props;
-  //편지 수정함수
+
+  //댓글쓰기토글
+
   const revisedToggle = () => {
     setRevisedMsgToggle(!revisedMsgToggle);
   };
@@ -31,39 +36,43 @@ const Render = (props) => {
   const replyToggle = () => {
     setReplyToggle(!replytoggle);
   };
+  //수정토글
+  const updateLetterToggle = () => {
+    setUpdateToggle(!updateToggle);
+  };
   const handleReplyChange = (e) => {
     setReply(e.target.value);
   };
   const handleReplySubmit = (e) => {
-    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     e.preventDefault();
     if (!reply || /^\s*$/.test(reply)) {
-      alert("쓸 말이 그렇게 없니 도대체?");
+      alert('쓸 말이 그렇게 없니 도대체?');
       return;
     } else {
       axios.post(
         `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`,
         {
-          name: localStorage.getItem("name"),
+          name: localStorage.getItem('name'),
           cmt: reply,
           createdAt: new Date().toLocaleString(),
         }
       );
-      alert("제출되었습니닷");
-      setReply("");
+      alert('제출되었습니닷');
+      setReply('');
       reRending();
     }
   };
   const removeReply = (e) => {
-    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     e.preventDefault();
-    let postId = e.target.id.split(",")[0];
-    let cmtId = e.target.id.split(",")[1];
-    if (window.confirm("진짜 댓글 지울꺼야?")) {
+    let postId = e.target.id.split(',')[0];
+    let cmtId = e.target.id.split(',')[1];
+    if (window.confirm('진짜 댓글 지울꺼야?')) {
       axios.delete(
         `https://letters-heroku.herokuapp.com/api/comments/${postId}/${cmtId}`
       );
-      alert("삭제되었습니닷");
+      alert('삭제되었습니닷');
       reRending();
     } else {
       return;
@@ -73,16 +82,18 @@ const Render = (props) => {
     <div className="letters-wrapper">
       {letter.createdAt.toLocaleString()}
       <div className="letter-author">
-        {letter.name === "병국"
+        {letter.name === '병국'
           ? `${letter.name}이가 수빈이에게`
           : `${letter.name}이가 병국이에게`}
       </div>
       {
         <div className="letters-content" key={letter._id}>
-          {!revisedMsgToggle ? (
+
+          {!updateToggle ? (
             <div dangerouslySetInnerHTML={{ __html: letter.msg }} />
           ) : (
-            <LettersModify letter={letter} />
+            <LetterUpdate letter={letter} />
+
           )}
           <div className="letters-content-wapper">
             <span className="letters-content-delete">
@@ -115,11 +126,9 @@ const Render = (props) => {
                   </div>
                 );
               })}
-            <span className="letters-content-modify" onClick={cmtFucToggle}>
+
+            <span className="letters-content-modify" onClick={revisedToggle}>
               <BiCommentEdit />
-            </span>
-            <span onClick={revisedToggle}>
-              <MdModeEdit />
             </span>
             {cmtToggle && (
               <form
@@ -139,6 +148,9 @@ const Render = (props) => {
                 <button className="button">제출</button>
               </form>
             )}
+            <span>
+              <BiHighlight reRending={reRending} onClick={updateLetterToggle} />
+            </span>
           </div>
         </div>
       }

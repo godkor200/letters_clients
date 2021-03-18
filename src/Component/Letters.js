@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./Letters.css";
-import Render from "./Render";
-import { IoMdRefresh } from "react-icons/io";
-import { AiOutlineDelete } from "react-icons/ai";
-import { MdModeEdit } from "react-icons/md";
-import LetterAdd from "./LetterAdd";
-import { Helmet } from "react-helmet";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Letters.css';
+import Render from './Render';
+import { IoMdRefresh } from 'react-icons/io';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BiCommentEdit } from 'react-icons/bi';
+import LetterAdd from './LetterAdd';
+import { Helmet } from 'react-helmet';
+import { LetterUpdate } from './LetterUpdate';
 const Letters = () => {
   const [data, setData] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const _effectMethod = {
     async _getLetter() {
       return await axios.get(
-        "https://letters-heroku.herokuapp.com/api/letters"
+        'https://letters-heroku.herokuapp.com/api/letters'
       );
     },
   };
@@ -26,11 +27,11 @@ const Letters = () => {
 
   const removeLetter = async (e) => {
     const url = `https://letters-heroku.herokuapp.com/api/letters/${e.target.id}`;
-    if (window.confirm("진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?")) {
+    if (window.confirm('진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?')) {
       await axios
         .delete(url)
         .then((res) => {
-          alert("지워졌어 나쁜놈아");
+          alert('지워졌어 나쁜놈아');
         })
         .catch((err) => {
           console.log(err);
@@ -55,7 +56,7 @@ const Letters = () => {
       <LetterAdd />
       <div className="letters-content">
         편지를 데이터베이스에서 불러오고 있는데 오류가 있으면 안뜰꺼야 새로고침
-        해보렴..{" "}
+        해보렴..{' '}
         <div className="wrap">
           <button className="button" onClick={() => reRending()}>
             <IoMdRefresh />
@@ -77,8 +78,9 @@ const Letters = () => {
             letter={letter}
             reRending={reRending}
             AiOutlineDelete={AiOutlineDelete}
-            MdModeEdit={MdModeEdit}
+            BiCommentEdit={BiCommentEdit}
             removeLetter={removeLetter}
+            LetterUpdate={LetterUpdate}
           />
         );
       })}
