@@ -1,7 +1,7 @@
-import React from 'react';
-import Letters from './Letters';
+import React from "react";
+import Letters from "./Letters";
+import "../App.css";
 
-import '../App.css';
 const LetterEntry = () => {
   return (
     <div className="body-warpper">

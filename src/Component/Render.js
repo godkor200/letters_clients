@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Letters.css';
@@ -5,8 +6,11 @@ import { FaReplyd } from 'react-icons/fa';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
 import { BiHighlight } from 'react-icons/bi';
 
+
 const Render = (props) => {
-  const [toggle, setToggle] = useState(false);
+  //댓글 쓰기 훅
+  const [cmtToggle, setCmtToggle] = useState(false);
+  const [revisedMsgToggle, setRevisedMsgToggle] = useState(false);
   const [replytoggle, setReplyToggle] = useState(false);
   const [updateToggle, setUpdateToggle] = useState(false);
   const [reply, setReply] = useState('');
@@ -18,9 +22,15 @@ const Render = (props) => {
     letter,
     LetterUpdate,
   } = props;
+
   //댓글쓰기토글
+
   const revisedToggle = () => {
-    setToggle(!toggle);
+    setRevisedMsgToggle(!revisedMsgToggle);
+  };
+  ////댓글 쓰기 토글 함수
+  const cmtFucToggle = () => {
+    setCmtToggle(!cmtToggle);
   };
   //댓글토글
   const replyToggle = () => {
@@ -78,10 +88,12 @@ const Render = (props) => {
       </div>
       {
         <div className="letters-content" key={letter._id}>
+
           {!updateToggle ? (
             <div dangerouslySetInnerHTML={{ __html: letter.msg }} />
           ) : (
             <LetterUpdate letter={letter} />
+
           )}
           <div className="letters-content-wapper">
             <span className="letters-content-delete">
@@ -114,10 +126,11 @@ const Render = (props) => {
                   </div>
                 );
               })}
+
             <span className="letters-content-modify" onClick={revisedToggle}>
               <BiCommentEdit />
             </span>
-            {toggle && (
+            {cmtToggle && (
               <form
                 className="letters-reply-form"
                 onSubmit={handleReplySubmit}
@@ -132,7 +145,6 @@ const Render = (props) => {
                   placeholder="어떤 댓글을 달꺼니?"
                   required
                 />
-
                 <button className="button">제출</button>
               </form>
             )}
@@ -140,7 +152,6 @@ const Render = (props) => {
               <BiHighlight reRending={reRending} onClick={updateLetterToggle} />
             </span>
           </div>
-          <div></div>
         </div>
       }
     </div>
