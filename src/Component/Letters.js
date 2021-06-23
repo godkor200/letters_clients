@@ -8,14 +8,15 @@ import { BiCommentEdit } from 'react-icons/bi';
 import LetterAdd from './LetterAdd';
 import { Helmet } from 'react-helmet';
 import { LetterUpdate } from './LetterUpdate';
+import { api } from '../config/api';
+import { useFetch } from '../config/hook';
 const Letters = () => {
+  console.log(api.GET_LETTER);
   const [data, setData] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const _effectMethod = {
     async _getLetter() {
-      return await axios.get(
-        'https://letters-heroku.herokuapp.com/api/letters'
-      );
+      return await axios.get(api.GET_LETTER);
     },
   };
   // 화면 시작하자마자 데이터 랜더링하고 시작하기 위해 useEffect 사용
@@ -26,7 +27,7 @@ const Letters = () => {
   }, [refresh]);
 
   const removeLetter = async (e) => {
-    const url = `https://letters-heroku.herokuapp.com/api/letters/${e.target.id}`;
+    const url = `${api.DELETE_LETTER}/${e.target.id}`;
     if (window.confirm('진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?')) {
       await axios
         .delete(url)
@@ -43,9 +44,7 @@ const Letters = () => {
   };
   //리렌더
 
-  const reRending = () => {
-    setRefresh(!refresh);
-  };
+  const reRending = () => setRefresh(!refresh);
 
   return !data ? (
     <div className="letters-wrapper">

@@ -1,6 +1,6 @@
-import React from "react";
-import Letters from "./Letters";
-import "../App.css";
+import React from 'react';
+import Letters from './Letters';
+import '../App.css';
 
 const LetterEntry = () => {
   return (
