@@ -3,25 +3,32 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Letters.css';
 import { FaReplyd } from 'react-icons/fa';
-import { MdSubdirectoryArrowRight } from 'react-icons/md';
 import { BiHighlight } from 'react-icons/bi';
+import { Post } from './Letters'
+import ReplyToggle from './replyToggle'
 
+interface props {
+  letter: Post;
+  removeLetter(e: React.MouseEvent<HTMLElement>): void;
+  AiOutlineDelete: any;
+  BiCommentEdit: any;
+  LetterUpdate: any;
+}
 
-const Render = (props) => {
+const Render = ({
+  removeLetter,
+  AiOutlineDelete,
+  BiCommentEdit,
+  letter,
+  LetterUpdate,
+}: props) => {
   //댓글 쓰기 훅
   const [cmtToggle, setCmtToggle] = useState(false);
   const [revisedMsgToggle, setRevisedMsgToggle] = useState(false);
   const [replytoggle, setReplyToggle] = useState(false);
   const [updateToggle, setUpdateToggle] = useState(false);
   const [reply, setReply] = useState('');
-  const {
-    reRending,
-    removeLetter,
-    AiOutlineDelete,
-    BiCommentEdit,
-    letter,
-    LetterUpdate,
-  } = props;
+
 
   //댓글쓰기토글
 
@@ -40,43 +47,43 @@ const Render = (props) => {
   const updateLetterToggle = () => {
     setUpdateToggle(!updateToggle);
   };
-  const handleReplyChange = (e) => {
+  const handleReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReply(e.target.value);
   };
-  const handleReplySubmit = (e) => {
+  const handleReplySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     e.preventDefault();
     if (!reply || /^\s*$/.test(reply)) {
       alert('쓸 말이 그렇게 없니 도대체?');
       return;
     } else {
-      axios.post(
-        `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`,
-        {
-          name: localStorage.getItem('name'),
-          cmt: reply,
-          createdAt: new Date().toLocaleString(),
-        }
-      );
-      alert('제출되었습니닷');
-      setReply('');
-      reRending();
+      // axios.post(
+      //   `https://letters-heroku.herokuapp.com/api/comments/${e.target.id}`,
+      //   {
+      //     name: localStorage.getItem('name'),
+      //     cmt: reply,
+      //     createdAt: new Date().toLocaleString(),
+      //   }
+      // );
+      // alert('제출되었습니닷');
+      // setReply('');
+      // reRending();
     }
   };
-  const removeReply = (e) => {
+  const removeReply = (e: React.MouseEvent<HTMLElement>) => {
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-    e.preventDefault();
-    let postId = e.target.id.split(',')[0];
-    let cmtId = e.target.id.split(',')[1];
-    if (window.confirm('진짜 댓글 지울꺼야?')) {
-      axios.delete(
-        `https://letters-heroku.herokuapp.com/api/comments/${postId}/${cmtId}`
-      );
-      alert('삭제되었습니닷');
-      reRending();
-    } else {
-      return;
-    }
+    // e.preventDefault();
+    // let postId = e.target.id.split(',')[0];
+    // let cmtId = e.target.id.split(',')[1];
+    // if (window.confirm('진짜 댓글 지울꺼야?')) {
+    //   axios.delete(
+    //     `https://letters-heroku.herokuapp.com/api/comments/${postId}/${cmtId}`
+    //   );
+    //   alert('삭제되었습니닷');
+    //   reRending();
+    // } else {
+    //   return;
+    // }
   };
   return (
     <div className="letters-wrapper">
@@ -88,45 +95,25 @@ const Render = (props) => {
       </div>
       {
         <div className="letters-content" key={letter._id}>
-
           {!updateToggle ? (
             <div dangerouslySetInnerHTML={{ __html: letter.msg }} />
           ) : (
             <LetterUpdate letter={letter} />
-
           )}
           <div className="letters-content-wapper">
             <span className="letters-content-delete">
               <AiOutlineDelete
                 id={letter._id}
-                onClick={(e) => removeLetter(e)}
+                onClick={(e: React.MouseEvent<HTMLElement>) => removeLetter(e)}
               />
             </span>
             <span className="letters-content-reply" onClick={replyToggle}>
               <FaReplyd id={letter._id} />({letter.cmt.length})
             </span>
             {replytoggle &&
-              letter.cmt.map((t) => {
-                return (
-                  <div>
-                    <div className="letters-reply-wapper" key={t._id}>
-                      <div className="replyTime">{t.createdAt}</div>
-                      <span className="replyComment">
-                        <MdSubdirectoryArrowRight />
-                        {t.name}
-                      </span>
-                      <div>{t.cmt}</div>
-                      <div className="letters-reply-delete">
-                        <AiOutlineDelete
-                          id={[letter._id, t._id]}
-                          onClick={removeReply}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
+              letter.cmt.map((item) => {
+                return <ReplyToggle _id={item._id} cmt={item.cmt} createdAt={item.createdAt} name={item.name} removeReply={removeReply} />
               })}
-
             <span className="letters-content-modify" onClick={revisedToggle}>
               <BiCommentEdit />
             </span>
@@ -149,12 +136,12 @@ const Render = (props) => {
               </form>
             )}
             <span>
-              <BiHighlight reRending={reRending} onClick={updateLetterToggle} />
+              <BiHighlight onClick={updateLetterToggle} />
             </span>
           </div>
         </div>
       }
-    </div>
+    </div >
   );
 };
 export default Render;

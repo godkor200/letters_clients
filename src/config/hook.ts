@@ -1,9 +1,10 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 
 import axios, { AxiosRequestConfig } from 'axios';
 
 interface State<T> {
   status: 'init' | 'fetching' | 'error' | 'fetched';
+  reRending(): void;
   data?: T;
   error?: string;
 }
@@ -23,13 +24,14 @@ function useFetch<T = unknown>(
 ): State<T> {
   const cache = useRef<Cache<T>>({});
   const cancelRequest = useRef<boolean>(false);
-
+  const reRending = () => setRefresh(!refresh);
   const initialState: State<T> = {
     status: 'init',
+    reRending: reRending,
     error: undefined,
     data: undefined,
   };
-
+  const [refresh, setRefresh] = useState(false);
   const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
     switch (action.type) {
       case 'request':
@@ -42,14 +44,12 @@ function useFetch<T = unknown>(
         return state;
     }
   };
-
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
     if (!url) {
       return;
     }
-
     const fetchData = async () => {
       dispatch({ type: 'request' });
 
@@ -70,13 +70,14 @@ function useFetch<T = unknown>(
 
     fetchData();
 
+    console.log('refresh', refresh);
     return () => {
       cancelRequest.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [refresh]);
 
   return state;
 }
 
-export default useFetch;
+export { useFetch };

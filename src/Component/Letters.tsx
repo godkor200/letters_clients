@@ -6,33 +6,38 @@ import { IoMdRefresh } from 'react-icons/io';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BiCommentEdit } from 'react-icons/bi';
 import LetterAdd from './LetterAdd';
-import { Helmet } from 'react-helmet';
-import { LetterUpdate } from './LetterUpdate';
+// import { Helmet } from 'react-helmet';
+import LetterUpdate from './LetterUpdate';
 import { api } from '../config/api';
 import { useFetch } from '../config/hook';
-const Letters = () => {
-  console.log(api.GET_LETTER);
-  const [data, setData] = useState(null);
-  const [refresh, setRefresh] = useState(false);
-  const _effectMethod = {
-    async _getLetter() {
-      return await axios.get(api.GET_LETTER);
-    },
-  };
-  // 화면 시작하자마자 데이터 랜더링하고 시작하기 위해 useEffect 사용
-  useEffect(() => {
-    _effectMethod._getLetter().then((res) => {
-      setData(res.data);
-    });
-  }, [refresh]);
 
-  const removeLetter = async (e) => {
-    const url = `${api.DELETE_LETTER}/${e.target.id}`;
+export interface Post {
+  cmt: Icmt[]
+  createdAt: string
+  msg: string
+  name: string
+  __v?: number
+  _id: string
+}
+export interface Icmt {
+  cmt: string;
+  createdAt: string;
+  name: string;
+  _id: string;
+  removeReply(e: React.MouseEvent<HTMLElement>): void;
+}
+const Letters = () => {
+  const { status, data, error, reRending } = useFetch<Post[]>(api.GET_LETTER);
+  console.log(status, data, error);
+
+  const removeLetter = async (e: React.MouseEvent<HTMLElement>) => {
+    const url = `${api.DELETE_LETTER}/${e.currentTarget.id}`;
     if (window.confirm('진짜 지울꺼야? 너 편지를 지울꺼니? 진짜로?')) {
       await axios
         .delete(url)
         .then((res) => {
           alert('지워졌어 나쁜놈아');
+          reRending()
         })
         .catch((err) => {
           console.log(err);
@@ -40,42 +45,30 @@ const Letters = () => {
     } else {
       return;
     }
-    reRending();
   };
   //리렌더
 
-  const reRending = () => setRefresh(!refresh);
 
   return !data ? (
     <div className="letters-wrapper">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>편지쓰기</title>
-      </Helmet>
       <LetterAdd />
       <div className="letters-content">
-        편지를 데이터베이스에서 불러오고 있는데 오류가 있으면 안뜰꺼야 새로고침
-        해보렴..{' '}
+        불러오고 있습니다.
         <div className="wrap">
-          <button className="button" onClick={() => reRending()}>
+          {/* <button className="button" >
             <IoMdRefresh />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
   ) : (
     <div className="letters-wrapper">
       <div className="versiontag">v1.1 : Implemented TextEditer</div>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>편지쓰기</title>
-      </Helmet>
       <LetterAdd reRending={reRending} />
       {data.map((letter) => {
         return (
           <Render
             letter={letter}
-            reRending={reRending}
             AiOutlineDelete={AiOutlineDelete}
             BiCommentEdit={BiCommentEdit}
             removeLetter={removeLetter}
